@@ -1,2 +1,0 @@
-# fishbowl
-My development box.
