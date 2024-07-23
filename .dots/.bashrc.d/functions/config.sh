@@ -26,6 +26,24 @@ function config() {
   esac
 }
 
+function config-dots-up() {
+  echo 'Installing dotfiles using stow.'
+  echo 'stow -v --no-folding --dir=$HOME/.fishbowl/.dots --target=$HOME .'
+
+  stow -v --no-folding --dir=$HOME/.fishbowl/.dots --target=$HOME .
+}
+
+function config-dots-down() {
+  echo 'Uninstalling dotfiles using stow.'
+  echo 'stow -v --delete --dir=$HOME/.fishbowl/.dots --target=$HOME .'
+
+  stow -v --delete --dir=$HOME/.fishbowl/.dots --target=$HOME .
+}
+
+function config-dots-source() {
+  source ~/.bashrc
+}
+
 function config-dots-push() {
   echo 'Committing and pushing all dotfile changes in $HOME/.fishbowl/.dots'
 
@@ -38,6 +56,20 @@ function config-dots-edit() {
   cd $HOME/.fishbowl/.dots
   $EDITOR .
   cd -
+}
+
+function config-nixos-up() {
+  git -C $HOME/.fishbowl add .nixos/.
+
+  echo "nixos-rebuild switch --flake $HOME/.nixos#default"
+  sudo nixos-rebuild switch --flake $HOME/.nixos\#default
+}
+
+function config-nixos-upgrade() {
+  git -C $HOME/.fishbowl add .nixos/.
+
+  echo "nixos-rebuild switch --flake $HOME/.nixos#default --upgrade"
+  sudo nixos-rebuild switch --flake $HOME/.nixos#default --upgrade
 }
 
 function config-nixos-push() {
@@ -69,40 +101,54 @@ function config-edit() {
 }
 
 function config-help() {
-  echo 'usage: config [target] [action]'
+  echo 'usage: config [target] <action> [opts]'
   echo
   echo 'Targets:'
-  echo '  dots  targets dotfiles in ~/.fishbowl/.dots'
-  echo '  nixos  targets nixos config in ~/.fishbowl/.nixos'
+  echo '  dots         targets dotfiles in ~/.fishbowl/.dots'
+  echo '  nixos        targets nixos config in ~/.fishbowl/.nixos'
   echo
-  echo 'Actions:'
-  echo '  push  stages target changes, commits, and pushes to remote `headless` branch'
-  echo '  edit  opens target directory in your prefered $EDITOR'
-  echo '  help  prints this'
+  echo 'Targetless Actions:'
+  echo '  edit         opens ~/.fishbowl directory in your prefered $EDITOR'
+  echo '  push         alias for "config dots push && config nixos push"'
+  echo '    --all      stages all changes in ~/.fishbowl, commits, and pushes to remote `headless` branch'
+  echo '  help         prints this'
   echo
-  echo 'Samples:'
-  echo '  # print help'
-  echo '  config help'
+  echo 'Target Specific Actions:'
+  echo '  dots'
+  echo '    up         installs the dotfiles from ~/.fishbowl/.dots into $HOME using gnustow'
+  echo '    down       uninstalls the dotfiles from $HOME using gnustow'
+  echo '    source     re-sources the $HOME/.bashrc file'
+  echo '    push       stages dots changes, commits, and pushes to remote `headless` branch'
+  echo '    edit       opens dots directory in your prefered $EDITOR'
+  echo '  nixos'
+  echo '    up         rebuilds the nixos system using nixos-rebuild with the flake defined in ~/.fishbowl/.nixos'
+  echo '    upgrade    rebuilds and upgrades the nixos system with --upgrade'
+  echo '    push       stages dots changes, commits, and pushes to remote `headless` branch'
+  echo '    edit       opens dots directory in your prefered $EDITOR'
   echo
-  echo '  # push only dotfiles'
+  echo 'Common Samples:'
+  echo '  # install dots'
+  echo '  config dots up'
+  echo
+  echo '  # source dots'
+  echo '  config dots source'
+  echo
+  echo '  # push dots changes to the repo'
   echo '  config dots push'
   echo
-  echo '  # push only nixos config'
-  echo '  config nixos push'
+  echo '  # rebuild nixos from conf'
+  echo '  config nixos up'
   echo
-  echo '  # push all changes in $HOME/.fishbowl'
-  echo '  config push --all'
+  echo '  # push nixos changes to the repo'
+  echo '  config nixos push'
   echo
   echo '  # push both dots and nixos config'
   echo '  config push'
   echo
-  echo '  # edit only dots'
+  echo '  # edit dots'
   echo '  config dots edit'
   echo
-  echo '  # edit only nixos config'
+  echo '  # edit nixos conf'
   echo '  config nixos edit'
-  echo
-  echo '  # edit whole ~/.fishbowl'
-  echo '  config edit'
 }
 

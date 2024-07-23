@@ -33,6 +33,8 @@
 	current.nebula
 	# virt
 	current.docker-compose
+	# hosting
+	unstable.flyctl
 	# perf
         current.btop
         current.iftop
