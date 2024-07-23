@@ -2,7 +2,7 @@
 
 {
   imports = [
-    ./hardware-configuration.nix # use the platform generated hardware config instead of our own
+    /etc/nixos/hardware-configuration.nix # use the platform generated hardware config instead of our own
   ];
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];

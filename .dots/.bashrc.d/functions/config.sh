@@ -20,7 +20,12 @@ function config() {
       return 0
     ;;
     *)
-      config-$target-$action 2>/dev/null || config-help
+      config-$target-$action 2>&1
+
+      if [[ "$?" == 127 ]]; then
+        config-help
+      fi
+
       return 0
     ;;
   esac
@@ -61,15 +66,15 @@ function config-dots-edit() {
 function config-nixos-up() {
   git -C $HOME/.fishbowl add .nixos/.
 
-  echo "nixos-rebuild switch --flake $HOME/.nixos#default"
-  sudo nixos-rebuild switch --flake $HOME/.nixos\#default
+  echo 'nixos-rebuild switch --flake $HOME/.fishbowl/.nixos#default --impure'
+  sudo nixos-rebuild switch --flake $HOME/.fishbowl/.nixos#default --impure
 }
 
 function config-nixos-upgrade() {
   git -C $HOME/.fishbowl add .nixos/.
 
-  echo "nixos-rebuild switch --flake $HOME/.nixos#default --upgrade"
-  sudo nixos-rebuild switch --flake $HOME/.nixos#default --upgrade
+  echo 'nixos-rebuild switch --flake $HOME/.fishbowl/.nixos#default --impure --upgrade'
+  sudo nixos-rebuild switch --flake $HOME/.fishbowl/.nixos#default --impure --upgrade
 }
 
 function config-nixos-push() {
