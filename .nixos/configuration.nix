@@ -110,6 +110,12 @@
   # if running in HyperV, this enables everything required to run properly in guest mode
   # virtualisation.hypervGuest.enable = true;
 
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 30d";
+  };
+
   system.stateVersion = "24.05";
 }
 
