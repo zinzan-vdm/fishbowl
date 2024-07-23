@@ -77,6 +77,11 @@ function config-nixos-upgrade() {
   sudo nixos-rebuild switch --flake $HOME/.fishbowl/.nixos#default --impure --upgrade
 }
 
+function config-nixos-gc() {
+  echo 'sudo nix-collect-garbage -d'
+  sudo nix-collect-garbage -d
+}
+
 function config-nixos-push() {
   echo 'Committing and pushing all config changes in $HOME/.fishbowl/.nixos'
 
@@ -128,6 +133,7 @@ function config-help() {
   echo '  nixos'
   echo '    up         rebuilds the nixos system using nixos-rebuild with the flake defined in ~/.fishbowl/.nixos'
   echo '    upgrade    rebuilds and upgrades the nixos system with --upgrade'
+  echo '    gc         runs nix garbage collector on nix packages, deletes all unlinked packages'
   echo '    push       stages dots changes, commits, and pushes to remote `headless` branch'
   echo '    edit       opens dots directory in your prefered $EDITOR'
   echo

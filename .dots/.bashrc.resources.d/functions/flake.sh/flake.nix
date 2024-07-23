@@ -1,15 +1,15 @@
 {
   # TODO: Update the description of this flake.
   description = "no description provided";
-  
+
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.11";
+    unstable.url = "github:NixOS/nixpkgs/unstable";
   };
 
-  outputs = { self, nixpkgs }: 
+  outputs = { self, unstable }:
   let
     system = "x86_64-linux";
-    pkgs = nixpkgs.legacyPackages.${system};
+    pkgs = unstable.legacyPackages.${system};
   in {
     devShells.${system}.default = pkgs.mkShell {
       buildInputs = with pkgs; [
