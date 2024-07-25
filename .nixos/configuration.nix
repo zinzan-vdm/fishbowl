@@ -28,9 +28,11 @@
 	current.fzf
 	current.parallel
         current.stow
+	current.sshfs
 	# net
 	current.wireguard-tools
 	current.nebula
+	current.linuxPackages.usbip
 	# virt
 	current.docker-compose
 	# hosting

@@ -89,6 +89,11 @@ require('lazy').setup({
 			require('catppuccin').setup({
 				flavour = 'macchiato',
 				transparent_background = true,
+				color_overrides = {
+					macchiato = {
+						maroon = "#ed8796",
+					},
+				},
 			})
 			require('catppuccin').load()
 		end,
@@ -183,6 +188,7 @@ require('lazy').setup({
 				keymap('n', '<leader>gb', function()
 					gs.blame_line({ full = false })
 				end, { desc = '[g]it [b]lame line' })
+				keymap('n', '<leader>gB', '<cmd>:Git blame<CR>', { desc = '[g]it [B]lame whole file in buffer' })
 				keymap('n', '<leader>gd', gs.diffthis, { desc = '[g]it [d]iff against index' })
 				keymap('n', '<leader>gD', function()
 					gs.diffthis('~')
@@ -499,8 +505,8 @@ require('lazy').setup({
 			format_on_save = true,
 			formatters_by_ft = {
 				go = { 'goimports', 'gofmt' },
-				typescript = { { 'eslint', 'prettierd', 'prettier' } },
-				javascript = { { 'eslint', 'prettierd', 'prettier' } },
+				typescript = { 'eslint', 'prettierd', 'prettier', stop_after_first = true },
+				javascript = { 'eslint', 'prettierd', 'prettier', stop_after_first = true },
 				['*'] = { 'trim_whitespace' },
 			},
 		},
