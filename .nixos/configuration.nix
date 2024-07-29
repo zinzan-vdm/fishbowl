@@ -89,6 +89,9 @@
     wireguard.enable = true;
   };
 
+  hardware.bluetooth.enable = true;
+  hardware.bluetooth.powerOnBoot = true;
+
   boot = {
     loader = {
       systemd-boot.enable = true;
@@ -105,8 +108,12 @@
   time.timeZone = "Europe/Vienna";
   i18n.defaultLocale = "en_US.UTF-8";
   console = {
-    font = "Lat2-Terminus16";
+    font = "ter-i32b";
     keyMap = "us";
+    earlySetup = true;
+    packages = [
+      current.terminus_font
+    ];
   };
 
   # if running in HyperV, this enables everything required to run properly in guest mode
