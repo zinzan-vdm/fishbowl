@@ -53,6 +53,7 @@ function config-dots-push() {
   echo 'Committing and pushing all dotfile changes in $HOME/.fishbowl/.dots'
 
   git -C $HOME/.fishbowl add .dots/.
+  git -C $HOME/.fishbowl restore --staged .nixos/.
   git -C $HOME/.fishbowl commit -m "dots [$(date --iso-8601=seconds)] [config-dots-push]"
   git -C $HOME/.fishbowl push origin headless
 }
@@ -86,6 +87,7 @@ function config-nixos-push() {
   echo 'Committing and pushing all config changes in $HOME/.fishbowl/.nixos'
 
   git -C $HOME/.fishbowl add .nixos/.
+  git -C $HOME/.fishbowl restore --staged .dots/.
   git -C $HOME/.fishbowl commit -m "nixos [$(date --iso-8601=seconds)] [config-nixos-push]"
   git -C $HOME/.fishbowl push origin headless
 }
