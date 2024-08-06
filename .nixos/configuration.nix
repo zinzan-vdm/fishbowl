@@ -1,5 +1,5 @@
 { config, lib, current, unstable, inputs, ... }:
-#
+
 {
   imports = [
     /etc/nixos/hardware-configuration.nix # use the platform generated hardware config instead of our own
