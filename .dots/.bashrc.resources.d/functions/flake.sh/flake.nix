@@ -3,7 +3,7 @@
   description = "no description provided";
 
   inputs = {
-    unstable.url = "github:NixOS/nixpkgs/unstable";
+    unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
   };
 
   outputs = { self, unstable }:

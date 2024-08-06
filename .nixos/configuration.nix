@@ -26,6 +26,7 @@
 	current.fd
 	current.ripgrep
 	current.fzf
+	current.jq
 	current.parallel
         current.stow
 	current.sshfs
@@ -41,6 +42,7 @@
         current.btop
         current.iftop
 	# misc
+	current.bc
 	current.gnumake
 	current.cmake
 	current.gcc
@@ -83,7 +85,13 @@
   networking = {
     hostName = "fishbowl";
 
-    firewall.enable = true;
+    firewall = {
+      enable = true;
+      allowedTCPPorts = [];
+      allowedTCPPortRanges = [];
+      allowedUDPPorts = [];
+      allowedUDPPortRanges = [];
+    };
 
     networkmanager.enable = true;
     wireguard.enable = true;

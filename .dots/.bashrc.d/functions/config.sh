@@ -78,8 +78,8 @@ function config-nixos-upgrade() {
 }
 
 function config-nixos-gc() {
-  echo 'sudo nix-collect-garbage -d'
-  sudo nix-collect-garbage -d
+  echo 'sudo nix-collect-garbage -v --delete-old'
+  sudo nix-collect-garbage -v --delete-old
 }
 
 function config-nixos-push() {
