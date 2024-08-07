@@ -8,13 +8,8 @@ function _hist() {
 
   local history_line=$(history | fzf "--query=$query")
 
-  local id=$(echo "$history_line" | cut -d' ' -f3-4 | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')
-  local command=$(echo "$history_line" | cut -d' ' -f5- | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')
+  local id=$(echo "$history_line" | sed -E 's/^[[:space:]]*([[:digit:]]+)[[:space:]]+(.+)[[:space:]]*$/\1/')
 
-  echo "  > [$id] $command"
-  
-  history -s "$command"
-
-  $command
+  fc -s $id
 }
 
