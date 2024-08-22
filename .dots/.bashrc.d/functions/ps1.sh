@@ -15,6 +15,6 @@ function ps1() {
   local host=$(hostname)
   local user=$(whoami)
 
-  export PS1="\n\[$grey\]\$ $user@$host { $name } \[$grey\][$(date --rfc-3339=seconds)]\n\[$red\]\w \[$green\](\!)\n\[$yellow\]  >\[$reset\] "
+  export PS1="\n\[$grey\]\$ $user@$host { $name } \[$grey\][\$(date --rfc-3339=seconds)]\n\[$red\]\w \[$green\](\!)\n\[$yellow\]  >\[$reset\] "
 }
 
