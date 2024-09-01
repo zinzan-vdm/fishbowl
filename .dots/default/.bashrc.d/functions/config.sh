@@ -33,10 +33,10 @@ function config() {
 }
 
 function config-dots-up() {
-  local profile=${1-default}
-  local current=$(cat $HOME/.dots-profile || '')
+  local current=$(cat $HOME/.dots-profile || 'default')
+  local profile=${1-$current}
 
-  if [[ -z "$current" ]]; then
+  if [[ "$profile" != "$current" ]] && [[ -z "$current" ]]; then
     echo "Uninstalling current dotfiles profile ($current)."
 
     $HOME/.fishbowl/.dots/$current/install.sh down
@@ -49,8 +49,8 @@ function config-dots-up() {
 }
 
 function config-dots-down() {
-  local profile=${1-default}
-  local current=$(cat $HOME/.dots-profile || '')
+  local current=$(cat $HOME/.dots-profile || 'default')
+  local profile=${1-$current}
 
   if [[ "$profile" == "default" ]]; then
     echo "You can't uninstall the default profile. If you're sure, you can do this by manually running its uninstall script."
