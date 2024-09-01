@@ -51,6 +51,19 @@
           inputs.home-manager.nixosModules.default
         ];
       };
+
+      gaming = nixpkgs.lib.nixosSystem {
+        specialArgs = {
+          inherit inputs;
+          current = current;
+          unstable = unstable;
+        };
+
+        modules = [
+          ./hosts/gaming/configuration.nix
+          inputs.home-manager.nixosModules.default
+        ];
+      };
     };
   };
 }
