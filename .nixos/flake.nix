@@ -14,18 +14,43 @@
   outputs = { self, nixpkgs, nixpkgs_unstable, ... }@inputs:
   let
     system = "x86_64-linux";
-  in {
-    nixosConfigurations.default = nixpkgs.lib.nixosSystem {
-      specialArgs = {
-        inherit inputs;
-	current = nixpkgs.legacyPackages.${system};
-	unstable = nixpkgs_unstable.legacyPackages.${system};
-      }; 
 
-      modules = [
-        ./configuration.nix
-        inputs.home-manager.nixosModules.default
-      ];
+    current = import nixpkgs {
+      system = system;
+      config.allowUnfree = true;
+    };
+
+    unstable = import nixpkgs_unstable {
+      system = system;
+      config.allowUnfree = true;
+    };
+  in {
+    nixosConfigurations = {
+      default = nixpkgs.lib.nixosSystem {
+        specialArgs = {
+          inherit inputs;
+          current = current;
+          unstable = unstable;
+        };
+
+        modules = [
+          ./hosts/default/configuration.nix
+          inputs.home-manager.nixosModules.default
+        ];
+      };
+
+      basic = nixpkgs.lib.nixosSystem {
+        specialArgs = {
+          inherit inputs;
+          current = current;
+          unstable = unstable;
+        };
+
+        modules = [
+          ./hosts/basic/configuration.nix
+          inputs.home-manager.nixosModules.default
+        ];
+      };
     };
   };
 }

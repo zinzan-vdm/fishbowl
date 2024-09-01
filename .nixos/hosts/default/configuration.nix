@@ -6,7 +6,17 @@
   ];
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
-  nixpkgs.config.allowUnfree = true;
+
+  users.users.fish = {
+    isNormalUser = true;
+    home = "/home/fish";
+    extraGroups = [ "wheel" "networkmanager" "docker" ];
+  };
+
+  environment.systemPackages = [
+    current.vim
+    current.git
+  ];
 
   home-manager.users.fish = {
     programs.home-manager.enable = true;
@@ -51,24 +61,13 @@
     };
   };
 
-  users.users.fish = {
-    isNormalUser = true;
-    home = "/home/fish";
-    extraGroups = [ "wheel" "networkmanager" "docker" ];
-  };
-
-  environment.systemPackages = [
-    current.vim
-    current.git
-  ];
-
   services.openssh.enable = true;
 
   virtualisation.docker = {
     enable = true;
     enableOnBoot = true;
     daemon.settings = {
-      insecure-registries = [];
+      insecure-registries = ["docker.docpay.cluster"];
     };
   };
 
@@ -87,7 +86,12 @@
 
     firewall = {
       enable = true;
-      allowedTCPPorts = [];
+      allowedTCPPorts = [
+	5200
+	3000
+	3500
+	60006
+      ];
       allowedTCPPortRanges = [];
       allowedUDPPorts = [];
       allowedUDPPortRanges = [];
