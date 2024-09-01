@@ -14,9 +14,9 @@ function up() {
   done
 
   echo 'Installing profile dots.'
-  echo "stow -v --no-folding --adopt --dir=$dots --target=\$HOME ."
+  echo "stow -v --no-folding --dir=$dots --target=\$HOME ."
 
-  stow -v --no-folding --adopt --dir=$dots --target=$HOME .
+  stow -v --no-folding --dir=$dots --target=$HOME .
 }
 
 function down() {
