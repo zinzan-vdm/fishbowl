@@ -14,8 +14,8 @@
   };
 
   environment.systemPackages = [
-    current.vim
     current.git
+    current.killall
   ];
 
   home-manager.users.fish = {
@@ -30,6 +30,8 @@
         unstable.tmux
 	unstable.neovim
 	current.git
+	current.zip
+	current.unzip
 	current.lazygit
 	current.zoxide
         current.tree
