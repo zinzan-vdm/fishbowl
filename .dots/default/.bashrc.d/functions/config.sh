@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+profile_dots="$HOME/.conf.profile.dots"
+profile_nixos="$HOME/.conf.profile.nixos"
+
 function config() {
   local target=${1}
   local action=${2}
@@ -33,7 +36,7 @@ function config() {
 }
 
 function config-dots-up() {
-  local current=$(cat $HOME/.dots-profile || 'default')
+  local current=$(cat $profile_dots || echo 'default')
   local profile=${1-$current}
 
   if [[ "$profile" != "$current" ]] && [[ -z "$current" ]]; then
@@ -45,11 +48,11 @@ function config-dots-up() {
   echo "Installing target dotfiles profile ($profile)."
   $HOME/.fishbowl/.dots/$profile/install.sh up
 
-  echo "$profile" > $HOME/.dots-profile
+  echo "$profile" > $profile_dots
 }
 
 function config-dots-down() {
-  local current=$(cat $HOME/.dots-profile || 'default')
+  local current=$(cat $profile_dots || echo 'default')
   local profile=${1-$current}
 
   if [[ "$profile" == "default" ]]; then
@@ -63,7 +66,7 @@ function config-dots-down() {
   echo "Installing dotfiles profile (default)."
   $HOME/.fishbowl/.dots/$current/install.sh down
 
-  echo "default" > $HOME/.dots-profile
+  echo "default" > $profile_dots
 }
 
 function config-dots-source() {
@@ -80,25 +83,29 @@ function config-dots-push() {
 }
 
 function config-dots-edit() {
-  local current=$(cat $HOME/.dots-profile || 'default')
+  local current=$(cat $profile_dots || echo 'default')
   local profile=${1-$current}
 
-  cd $HOME/.fishbowl/.dots/$profile
+  cd "$HOME/.fishbowl/.dots/$profile"
   $EDITOR .
   cd -
 }
 
 function config-nixos-up() {
-  local profile=${1-default}
+  local current=$(cat $profile_nixos || echo 'default')
+  local profile=${1-$current}
 
   git -C $HOME/.fishbowl add .nixos/.
 
   echo "nixos-rebuild switch --flake \$HOME/.fishbowl/.nixos#$profile --impure"
   sudo nixos-rebuild switch --flake "$HOME/.fishbowl/.nixos#$profile" --impure
+
+  echo "$profile" > $profile_nixos
 }
 
 function config-nixos-upgrade() {
-  local profile=${1-default}
+  local current=$(cat $profile_nixos || echo 'default')
+  local profile=${1-$current}
 
   git -C $HOME/.fishbowl add .nixos/.
 
