@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-profile_dots="$HOME/.conf.profile.dots"
-profile_nixos="$HOME/.conf.profile.nixos"
+profile_dots="$HOME/.fishbowl.profile.dots"
+profile_nixos="$HOME/.fishbowl.profile.nixos"
 
 function config() {
   local target=${1}
