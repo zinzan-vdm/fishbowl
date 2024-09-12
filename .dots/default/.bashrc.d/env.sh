@@ -1,6 +1,6 @@
 export EDITOR=nvim
 
-export HISTCONTROL=ignorespace
+export HISTCONTROL=ignorespace:ignoredups:erasedups
 export HISTSIZE=10000
 export HISTFILESIZE=10000
 shopt -s histappend
