@@ -10,7 +10,7 @@
   users.users.fish = {
     isNormalUser = true;
     home = "/home/fish";
-    extraGroups = [ "wheel" "networkmanager" "docker" ];
+    extraGroups = [ "wheel" "disk" "networkmanager" "docker" ];
   };
 
   environment.systemPackages = [
@@ -92,6 +92,8 @@
 	5200
 	3000
 	3500
+	8080
+	8081
 	60006
       ];
       allowedTCPPortRanges = [];
