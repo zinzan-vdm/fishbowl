@@ -25,22 +25,23 @@
       username = "fish";
       homeDirectory = "/home/fish";
       packages = [
-        current.home-manager
+	current.home-manager
 	# tools
-        unstable.tmux
+	unstable.atuin
+	unstable.tmux
 	unstable.neovim
 	current.git
 	current.zip
 	current.unzip
 	current.lazygit
 	current.zoxide
-        current.tree
+	current.tree
 	current.fd
 	current.ripgrep
 	current.fzf
 	current.jq
 	current.parallel
-        current.stow
+	current.stow
 	current.sshfs
 	# net
 	current.wireguard-tools
@@ -51,8 +52,8 @@
 	# hosting
 	unstable.flyctl
 	# perf
-        current.btop
-        current.iftop
+	current.btop
+	current.iftop
 	# misc
 	current.bc
 	current.gnumake
