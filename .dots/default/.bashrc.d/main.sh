@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 function include-sources() {
   for FILE in $(fd -HL -t file -e sh . "$1"); do

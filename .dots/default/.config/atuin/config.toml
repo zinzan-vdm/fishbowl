@@ -1,0 +1,11 @@
+update_check = false
+
+show_help = false
+show_tabs = false
+
+secrets_filter = false
+
+keymap_mode = 'emacs'
+
+enter_accept = true
+
