@@ -4,8 +4,13 @@ show_help = false
 show_tabs = false
 
 secrets_filter = false
+search_mode = 'skim'
 
 keymap_mode = 'emacs'
+ctrl_n_shortcuts = false
 
 enter_accept = true
 
+# [daemon]
+# enabled = true
+# sync_frequency = 5
