@@ -382,15 +382,15 @@ require('lazy').setup({
 
 					-- inlay hints in your code if the lsp supports it
 					if client and client.server_capabilities.inlayHintProvider and vim.lsp.inlay_hint then
-						vim.lsp.inlay_hint.enable(true)
+						vim.lsp.inlay_hint.enable(false)
 
 						mapkey(
 							'n',
-							'<leader>cH',
+							'<leader>h',
 							function()
 								vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
 							end,
-							'toggle [c]ode inlay [h]ints'
+							'toggle lsp inlay [h]ints'
 						)
 					end
 				end,
@@ -410,6 +410,44 @@ require('lazy').setup({
 
 			-- lets pre-install some language servers; see `:help lspconfig-all` for a list of preconfigured lsps
 			local servers = {
+				ts_ls = {
+					settings = {
+						typescript = {
+							inlayHints = {
+								includeInlayParameterNameHints = 'all',
+								includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+								includeInlayFunctionParameterTypeHints = true,
+								includeInlayVariableTypeHints = true,
+								includeInlayVariableTypeHintsWhenTypeMatchesName = false,
+								includeInlayPropertyDeclarationTypeHints = true,
+								includeInlayFunctionLikeReturnTypeHints = true,
+								includeInlayEnumMemberValueHints = true,
+							}
+						},
+						javascript = {
+							inlayHints = {
+								includeInlayParameterNameHints = 'all',
+								includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+								includeInlayFunctionParameterTypeHints = true,
+								includeInlayVariableTypeHints = true,
+								includeInlayVariableTypeHintsWhenTypeMatchesName = false,
+								includeInlayPropertyDeclarationTypeHints = true,
+								includeInlayFunctionLikeReturnTypeHints = true,
+								includeInlayEnumMemberValueHints = true,
+							}
+						},
+					},
+				},
+				gopls = {
+					hints = {
+						assignVariableTypes = true,
+						compositeLiteralFields = true,
+						constantValues = true,
+						functionTypeParameters = true,
+						parameterNames = true,
+						rangeVariableTypes = true,
+					},
+				},
 			}
 
 			-- ensure mason servers are installed, you can check with `:Mason` and use `g?` in its menu for help
@@ -426,7 +464,7 @@ require('lazy').setup({
 						local server = servers[server_name] or {}
 						-- override only values explicitly passed by above server config
 						server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
-            					require('lspconfig')[server_name].setup(server)
+						require('lspconfig')[server_name].setup(server)
 					end,
 				},
 			})
