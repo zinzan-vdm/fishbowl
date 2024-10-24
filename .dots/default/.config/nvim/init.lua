@@ -386,11 +386,11 @@ require('lazy').setup({
 
 						mapkey(
 							'n',
-							'<leader>h',
+							'<leader>ih',
 							function()
 								vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
 							end,
-							'toggle lsp inlay [h]ints'
+							'toggle lsp [i]nlay [h]ints'
 						)
 					end
 				end,
