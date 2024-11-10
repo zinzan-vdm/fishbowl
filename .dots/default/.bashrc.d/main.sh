@@ -10,5 +10,6 @@ include-sources ~/.bashrc.d/functions
 include-sources ~/.bashrc.d/appearance
 
 source ~/.bashrc.d/env.sh
+source ~/.bashrc.d/secrets.sh
 source ~/.bashrc.d/term.sh
 

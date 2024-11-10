@@ -630,5 +630,122 @@ require('lazy').setup({
 		dependencies = { 'nvim-lua/plenary.nvim' },
 		opts = { signs = false },
 	},
+
+	-- various small and independent nvim modules aimed at making your experience better
+	{ 'echasnovski/mini.nvim',
+		version = false,
+		config = function()
+			require('mini.icons').setup()
+
+			require('mini.ai').setup({ n_lines = 500 })
+			require('mini.surround').setup()
+
+		end,
+	},
+
+	-- render markdown nicely
+	{ 'MeanderingProgrammer/render-markdown.nvim',
+		opts = {
+			file_types = { "markdown", "Avante" },
+		},
+		ft = { "markdown", "Avante" },
+	},
+
+	-- avante, adding cursor-like code gen by your favorite llm engine
+	-- see: https://github.com/yetone/avante.nvim
+	{ 'yetone/avante.nvim',
+		event = "VeryLazy",
+		lazy = false,
+		version = true, -- always update
+		build = "make",
+		dependencies = {
+			"nvim-treesitter/nvim-treesitter",
+			"stevearc/dressing.nvim",
+			"nvim-lua/plenary.nvim",
+			"MunifTanjim/nui.nvim",
+			'echasnovski/mini.icons', -- icons are optional
+			-- 'zbirenbaum/copilot.lua', -- copilot support is optional
+			{
+				-- support for image pasting
+				"HakonHarnes/img-clip.nvim",
+				event = "VeryLazy",
+				opts = {
+					-- recommended settings
+					default = {
+						embed_image_as_base64 = false,
+						prompt_for_file_name = false,
+						drag_and_drop = {
+							insert_mode = true,
+						},
+						-- required for Windows users
+						use_absolute_path = true,
+					},
+				},
+			},
+			{
+				'MeanderingProgrammer/render-markdown.nvim',
+				opts = {
+					file_types = { "markdown", "Avante" },
+				},
+				ft = { "markdown", "Avante" },
+			},
+		},
+		opts = {
+			provider = "claude",
+			auto_suggestions_provider = "claude",
+			claude = {
+				endpoint = "https://api.anthropic.com",
+				model = "claude-3-5-sonnet-20241022",
+				temperature = 0,
+				max_tokens = 4096,
+			},
+			behaviour = {
+				auto_suggestions = false,
+				auto_set_highlight_group = true,
+				auto_set_keymaps = true,
+				auto_apply_diff_after_generation = false,
+				support_paste_from_clipboard = false,
+			},
+			mappings = {
+				-- default mappings
+			},
+			hints = { enabled = true },
+			windows = {
+				position = "right",
+				wrap = true,
+				width = 30,
+				sidebar_header = {
+					enabled = true,
+					align = "center",
+					rounded = true,
+				},
+				input = {
+					prefix = "> ",
+					height = 8,
+				},
+				edit = {
+					border = "rounded",
+					start_insert = true,
+				},
+				ask = {
+					floating = false,
+					start_insert = true,
+					border = "rounded",
+					focus_on_apply = "ours",
+				},
+			},
+			highlights = {
+				diff = {
+					current = "DiffText",
+					incoming = "DiffAdd",
+				},
+			},
+			diff = {
+				autojump = true,
+				list_opener = "copen",
+				override_timeoutlen = 500,
+			},
+		},
+	}
 })
 
