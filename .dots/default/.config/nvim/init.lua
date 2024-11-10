@@ -706,16 +706,14 @@ require('lazy').setup({
 				auto_apply_diff_after_generation = false,
 				support_paste_from_clipboard = false,
 			},
-			mappings = {
-				-- default mappings
-			},
-			hints = { enabled = true },
+			mappings = {}, -- default mappings
+			hints = { enabled = false }, -- hints on lines, it sucks
 			windows = {
 				position = "right",
 				wrap = true,
 				width = 30,
 				sidebar_header = {
-					enabled = true,
+					enabled = false,
 					align = "center",
 					rounded = true,
 				},
