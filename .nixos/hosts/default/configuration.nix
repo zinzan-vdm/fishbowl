@@ -95,6 +95,7 @@
 	3500
 	8080
 	8081
+	7703
 	60006
       ];
       allowedTCPPortRanges = [];
