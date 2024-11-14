@@ -636,7 +636,7 @@ require('lazy').setup({
 	{ 'lukas-reineke/virt-column.nvim',
 		opts = {
 			char = { '│' },
-			virtcolumn = '160',
+			virtcolumn = '120',
 			highlight = { 'LineNr' },
 		},
 	},
