@@ -19,8 +19,9 @@ vim.opt.undofile = true
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 
-vim.opt.tabstop = 2
-vim.opt.shiftwidth = 2
+vim.opt.expandtab = false
+vim.opt.tabstop = 3
+vim.opt.shiftwidth = 3
 
 vim.opt.signcolumn = 'yes'
 
@@ -253,13 +254,13 @@ require('lazy').setup({
 						find_command = {
 							"rg",
 							"--files",
-							"--follow",        -- Follow symbolic links
-							"--hidden",        -- Search for hidden files
-							"--no-heading",    -- Don't group matches by each file
+							"--follow",			 -- Follow symbolic links
+							"--hidden",			 -- Search for hidden files
+							"--no-heading",	 -- Don't group matches by each file
 							"--with-filename", -- Print the file path with the matched lines
-							"--line-number",   -- Show line numbers
-							"--column",        -- Show column numbers
-							"--smart-case",    -- Smart case search
+							"--line-number",	 -- Show line numbers
+							"--column",			 -- Show column numbers
+							"--smart-case",	 -- Smart case search
 							-- Exclude some patterns from search
 							"--glob=!**/.git/*",
 						},
@@ -584,12 +585,12 @@ require('lazy').setup({
 				mapping = cmp.mapping.preset.insert({ -- see: `:help ins-completion` for why these mappings were chosen
 					['<C-Space>'] = cmp.mapping.complete(),
 					['<C-n>'] = cmp.mapping.select_next_item(), -- [n]ext item
-          ['<Tab>'] = cmp.mapping.select_next_item(),
+			 ['<Tab>'] = cmp.mapping.select_next_item(),
 
 					['<C-p>'] = cmp.mapping.select_prev_item(), -- [p]revious item
 					['<S-Tab>'] = cmp.mapping.select_prev_item(),
 
-          				['<C-f>'] = cmp.mapping.scroll_docs(4), -- scroll the docs withdow [f]orward
+							['<C-f>'] = cmp.mapping.scroll_docs(4), -- scroll the docs withdow [f]orward
 					['<C-b>'] = cmp.mapping.scroll_docs(-4), -- scroll the docs window [b]ackward
 
 					['<C-y>'] = cmp.mapping.confirm({ select = true }), -- accept the current snippet/import/completion
@@ -598,18 +599,18 @@ require('lazy').setup({
 					-- jump to next placeholder in snippet, think of Ctrl+Right(l), and Ctrl+Left(h) as moving right (fwd) and left (bwd) through the snippet
 					['<C-l>'] = cmp.mapping(
 						function()
-          						if luasnip.expand_or_locally_jumpable() then
-          							luasnip.expand_or_jump()
-          						end
-          					end,
+									if luasnip.expand_or_locally_jumpable() then
+										luasnip.expand_or_jump()
+									end
+								end,
 						{ 'i', 's' }
 					),
 					['<C-h>'] = cmp.mapping(
 						function()
-          						if luasnip.locally_jumpable(-1) then
-          							luasnip.jump(-1)
-          						end
-          					end,
+									if luasnip.locally_jumpable(-1) then
+										luasnip.jump(-1)
+									end
+								end,
 						{ 'i', 's' }
 					),
 
@@ -629,6 +630,15 @@ require('lazy').setup({
 		event = 'VimEnter',
 		dependencies = { 'nvim-lua/plenary.nvim' },
 		opts = { signs = false },
+	},
+
+	-- virtual character-based column markers for more fine-grained control over colorcolumn+highlight
+	{ 'lukas-reineke/virt-column.nvim',
+		opts = {
+			char = { '│' },
+			virtcolumn = '160',
+			highlight = { 'LineNr' },
+		},
 	},
 
 	-- various small and independent nvim modules aimed at making your experience better
