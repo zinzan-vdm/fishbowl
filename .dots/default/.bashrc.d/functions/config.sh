@@ -109,6 +109,9 @@ function config-nixos-upgrade() {
 
   git -C $HOME/.fishbowl add .nixos/.
 
+  echo "nix flake update \$HOME/.fishbowl/.nixos"
+  nix flake update "$HOME/.fishbowl/.nixos"
+
   echo "nixos-rebuild switch --flake \$HOME/.fishbowl/.nixos#$profile --impure --upgrade"
   sudo nixos-rebuild switch --flake "$HOME/.fishbowl/.nixos#$profile" --impure --upgrade
 }
