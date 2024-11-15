@@ -7,6 +7,11 @@ fi
 
 \builtin unalias cd &>/dev/null || \builtin true
 function cd() {
+  if [[ -d "$@" ]]; then
+    __zoxide_z "$@"
+    return $?
+  fi
+
   if [[ "$@" != '.' && "$@" != '..' && "$@" != '-' ]]; then
     local fdstart="$(fd --max-results 1 --max-depth 1 --type d --no-ignore --hidden "^$@")"
 

@@ -665,7 +665,7 @@ require('lazy').setup({
 	{ 'yetone/avante.nvim',
 		event = "VeryLazy",
 		lazy = false,
-		version = true, -- always update
+		version = false, -- always update
 		build = "make",
 		dependencies = {
 			"nvim-treesitter/nvim-treesitter",
