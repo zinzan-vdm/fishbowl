@@ -2,7 +2,6 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
 vim.g.have_nerd_font = true
-
 vim.opt.number = true
 vim.opt.relativenumber = true
 
@@ -237,6 +236,7 @@ require('lazy').setup({
 			},
 			{ 'nvim-telescope/telescope-ui-select.nvim' },
 			{ 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
+			{ 'debugloop/telescope-undo.nvim' },
 		},
 		config = function()
 			require('telescope').setup({
@@ -244,6 +244,7 @@ require('lazy').setup({
 					['ui-select'] = {
 						require('telescope.themes').get_dropdown(),
 					},
+					undo = {},
 				},
 				defaults = {
 					hidden = true,
@@ -277,6 +278,7 @@ require('lazy').setup({
 			-- enable telescope extensions if they are installed
 			pcall(require('telescope').load_extension, 'fzf')
 			pcall(require('telescope').load_extension, 'ui-select')
+			pcall(require("telescope").load_extension, 'undo')
 
 			-- see `:h telescope.builtin`
 			local ts = require('telescope.builtin')
@@ -290,6 +292,7 @@ require('lazy').setup({
 			vim.keymap.set('n', '<leader>fr', ts.resume, { desc = '[f]ind [r]esume' })
 			vim.keymap.set('n', '<leader>f.', ts.oldfiles, { desc = '[f]ind recent files (. for repeat)' })
 			vim.keymap.set('n', '<leader><leader>', ts.buffers, { desc = '[ ] find buffer' })
+			vim.keymap.set("n", "<leader>fu", "<cmd>Telescope undo<cr>", { desc = '[f]ind [u]ndos' })
 
 			vim.keymap.set('n', '<leader>/',
 				function()
@@ -644,9 +647,13 @@ require('lazy').setup({
 	-- various small and independent nvim modules aimed at making your experience better
 	{ 'echasnovski/mini.nvim',
 		version = false,
+		dependencies = {
+			'echasnovski/mini.icons',
+			'echasnovski/mini.ai',
+			'echasnovski/mini.surround',
+		},
 		config = function()
 			require('mini.icons').setup()
-
 			require('mini.ai').setup({ n_lines = 500 })
 			require('mini.surround').setup()
 		end,
@@ -663,21 +670,21 @@ require('lazy').setup({
 	-- avante, adding cursor-like code gen by your favorite llm engine
 	-- see: https://github.com/yetone/avante.nvim
 	{ 'yetone/avante.nvim',
-		event = "VeryLazy",
+		event = 'VeryLazy',
 		lazy = false,
 		version = false, -- always update
-		build = "make",
+		build = 'make',
 		dependencies = {
-			"nvim-treesitter/nvim-treesitter",
-			"stevearc/dressing.nvim",
-			"nvim-lua/plenary.nvim",
-			"MunifTanjim/nui.nvim",
+			'nvim-treesitter/nvim-treesitter',
+			'stevearc/dressing.nvim',
+			'nvim-lua/plenary.nvim',
+			'MunifTanjim/nui.nvim',
 			'echasnovski/mini.icons', -- icons are optional
 			-- 'zbirenbaum/copilot.lua', -- copilot support is optional
 			{
 				-- support for image pasting
-				"HakonHarnes/img-clip.nvim",
-				event = "VeryLazy",
+				'HakonHarnes/img-clip.nvim',
+				event = 'VeryLazy',
 				opts = {
 					-- recommended settings
 					default = {
@@ -694,17 +701,17 @@ require('lazy').setup({
 			{
 				'MeanderingProgrammer/render-markdown.nvim',
 				opts = {
-					file_types = { "markdown", "Avante" },
+					file_types = { 'markdown', 'Avante' },
 				},
-				ft = { "markdown", "Avante" },
+				ft = { 'markdown', 'Avante' },
 			},
 		},
 		opts = {
-			provider = "claude",
-			auto_suggestions_provider = "claude",
+			provider = 'claude',
+			auto_suggestions_provider = 'claude',
 			claude = {
-				endpoint = "https://api.anthropic.com",
-				model = "claude-3-5-sonnet-20241022",
+				endpoint = 'https://api.anthropic.com',
+				model = 'claude-3-5-sonnet-20241022',
 				temperature = 0,
 				max_tokens = 4096,
 			},
@@ -716,81 +723,81 @@ require('lazy').setup({
 				support_paste_from_clipboard = false,
 			},
 			mappings = {
-				ask = "<leader>aa",
-				edit = "<leader>ae",
-				refresh = "<leader>ar",
-				focus = "<leader>af",
+				ask = '<leader>aa',
+				edit = '<leader>ae',
+				refresh = '<leader>ar',
+				focus = '<leader>af',
 				diff = {
-					ours = "co",
-					theirs = "ct",
-					all_theirs = "ca",
-					both = "cb",
-					cursor = "cc",
-					next = "]x",
-					prev = "[x",
+					ours = 'co',
+					theirs = 'ct',
+					all_theirs = 'ca',
+					both = 'cb',
+					cursor = 'cc',
+					next = ']x',
+					prev = '[x',
 				},
 				suggestion = {
-					accept = "<leader>asa",
-					next = "<leader>asn",
-					prev = "<leader>asN",
-					dismiss = "<leader>asd",
+					accept = '<leader>asa',
+					next = '<leader>asn',
+					prev = '<leader>asN',
+					dismiss = '<leader>asd',
 				},
 				jump = {
-					next = "]]",
-					prev = "[[",
+					next = ']]',
+					prev = '[[',
 				},
 				submit = {
-					normal = "<CR>",
-					insert = "<C-s>",
+					normal = '<CR>',
+					insert = '<C-s>',
 				},
 				toggle = {
-					default = "<leader>at",
-					debug = "<leader>ad",
-					hint = "<leader>ah",
-					suggestion = "<leader>as",
-					repomap = "<leader>aR",
+					default = '<leader>at',
+					debug = '<leader>ad',
+					hint = '<leader>ah',
+					suggestion = '<leader>as',
+					repomap = '<leader>aR',
 				},
 				sidebar = {
-					apply_all = "A",
-					apply_cursor = "a",
-					switch_windows = "<Tab>",
-					reverse_switch_windows = "<S-Tab>",
+					apply_all = 'A',
+					apply_cursor = 'a',
+					switch_windows = '<Tab>',
+					reverse_switch_windows = '<S-Tab>',
 				},
 			},
 			hints = { enabled = false }, -- hints on lines, it sucks
 			windows = {
-				position = "right",
+				position = 'right',
 				wrap = true,
 				width = 30,
 				sidebar_header = {
 					enabled = false,
-					align = "center",
+					align = 'center',
 					rounded = true,
 				},
 				input = {
-					prefix = "> ",
+					prefix = '> ',
 					height = 8,
 				},
 				edit = {
-					border = "rounded",
+					border = 'rounded',
 					start_insert = true,
 				},
 				ask = {
 					floating = false,
 					start_insert = true,
-					border = "rounded",
-					focus_on_apply = "ours",
+					border = 'rounded',
+					focus_on_apply = 'ours',
 				},
 			},
 			highlights = {
 				diff = {
-					current = "DiffText",
-					incoming = "DiffAdd",
+					current = 'DiffText',
+					incoming = 'DiffAdd',
 				},
 			},
 			diff = {
 				autojump = true,
-				list_opener = "copen",
+				list_opener = 'copen',
 				override_timeoutlen = 500,
 			},
 		},
