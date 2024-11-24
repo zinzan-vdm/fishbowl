@@ -54,6 +54,8 @@
 	# perf
 	current.btop
 	current.iftop
+	# llm/ai
+	unstable.aichat
 	# misc
 	current.bc
 	current.gnumake
