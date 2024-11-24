@@ -8,3 +8,5 @@ alias conf='config'
 alias dots='config dots'
 alias nixos='config nixos'
 
+alias aa='aichat'
+alias ai='aichat'
