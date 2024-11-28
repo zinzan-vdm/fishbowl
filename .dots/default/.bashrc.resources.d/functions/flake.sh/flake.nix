@@ -3,17 +3,27 @@
   description = "no description provided";
 
   inputs = {
-    unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
+    nixpkgs_unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
   };
 
-  outputs = { self, unstable }:
+  outputs = { self, nixpkgs, nixpkgs_unstable }:
   let
     system = "x86_64-linux";
-    pkgs = unstable.legacyPackages.${system};
+
+    current = import nixpkgs {
+      system = system;
+      config.allowUnfree = true;
+    };
+
+    unstable = import nixpkgs_unstable {
+      system = system;
+      config.allowUnfree = true;
+    };
   in {
     devShells.${system}.default = pkgs.mkShell {
-      buildInputs = with pkgs; [
-        # TODO: Add your depedencies here.
+      buildInputs = [
+        # TODO: Add your dependencies here.
       ];
 
       # TODO: Update the PS1 update for terminal with the flake name.
