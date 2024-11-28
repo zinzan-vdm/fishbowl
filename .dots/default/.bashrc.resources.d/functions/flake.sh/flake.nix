@@ -21,15 +21,17 @@
       config.allowUnfree = true;
     };
   in {
-    devShells.${system}.default = pkgs.mkShell {
-      buildInputs = [
-        # TODO: Add your dependencies here.
-      ];
+    devShells.${system} = {
+      default = current.mkShell {
+        buildInputs = [
+          # TODO: Add your dependencies here.
+        ];
 
-      # TODO: Update the PS1 update for terminal with the flake name.
-      shellHook = ''
-        ps1 'flake: unnamed'
-      '';
+        # TODO: Update the PS1 update for terminal with the flake name.
+        shellHook = ''
+          ps1 'flake: unnamed' 2>/dev/null
+        '';
+      };
     };
   };
 }
