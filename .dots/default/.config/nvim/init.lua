@@ -37,8 +37,6 @@ vim.opt.listchars = {
 	nbsp = '␣',
 }
 
-
-
 vim.opt.inccommand = 'split'
 
 vim.opt.cursorline = true
