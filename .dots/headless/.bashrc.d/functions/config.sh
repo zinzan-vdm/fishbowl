@@ -24,6 +24,10 @@ function config() {
       config-edit
       return 0
     ;;
+    profile)
+      config-profile
+      return 0
+    ;;
     *)
       shift 2
       config-$target-$action "$@" 2>&1
@@ -35,6 +39,11 @@ function config() {
       return 0
     ;;
   esac
+}
+
+function config-dots-profile() {
+  dots=$(cat $profile_dots)
+  echo "$dots -> \$HOME/.fishbowl/.dots/$dots"
 }
 
 function config-dots-up() {
@@ -90,6 +99,11 @@ function config-dots-edit() {
   cd -
 }
 
+function config-nixos-profile() {
+  nixos=$(cat $profile_nixos)
+  echo "$nixos -> \$HOME/.fishbowl/.nixos/$nixos"
+}
+
 function config-nixos-up() {
   local current=$(cat $profile_nixos || echo $default_profile)
   local profile=${1-$current}
@@ -135,6 +149,16 @@ function config-nixos-edit() {
   cd -
 }
 
+function config-profile() {
+  dots=$(cat $profile_dots)
+  nixos=$(cat $profile_nixos)
+
+  echo 'dots'
+  echo "  $dots -> \$HOME/.fishbowl/.dots/$dots"
+  echo 'nixos'
+  echo "  $nixos -> \$HOME/.fishbowl/.nixos/$nixos"
+}
+
 function config-push-all() {
   echo 'Committing and pushing all config changes in $HOME/.fishbowl'
 
@@ -157,6 +181,7 @@ function config-help() {
   echo '  nixos                  targets nixos config in ~/.fishbowl/.nixos'
   echo
   echo 'Targetless Actions:'
+  echo '  profile                prints the current profiles for dots and nixos'
   echo '  edit                   opens ~/.fishbowl directory in your prefered $EDITOR'
   echo '  push                   alias for "config dots push && config nixos push"'
   echo '    --all                stages all changes in ~/.fishbowl, commits, and pushes to remote branch'
@@ -164,6 +189,7 @@ function config-help() {
   echo
   echo 'Target Specific Actions:'
   echo '  dots'
+  echo '    profile              prints the current profile for dots'
   echo '    up                   installs the dotfiles from ~/.fishbowl/.dots into $HOME using gnustow'
   echo '      [profile=headless] specified which profile to switch to'
   echo '    down                 uninstalls the dotfiles from $HOME using gnustow'
@@ -171,6 +197,7 @@ function config-help() {
   echo '    push                 stages dots changes, commits, and pushes to remote branch'
   echo '    edit                 opens dots directory in your prefered $EDITOR'
   echo '  nixos'
+  echo '    profile              prints the current profile for nixos'
   echo '    up                   rebuilds the nixos system using nixos-rebuild with the flake defined in ~/.fishbowl/.nixos'
   echo '    upgrade              rebuilds and upgrades the nixos system with --upgrade'
   echo '    gc                   runs nix garbage collector on nix packages, deletes all unlinked packages'
