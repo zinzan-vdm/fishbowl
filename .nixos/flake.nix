@@ -26,7 +26,7 @@
     };
   in {
     nixosConfigurations = {
-      default = nixpkgs.lib.nixosSystem {
+      headless = nixpkgs.lib.nixosSystem {
         specialArgs = {
           inherit inputs;
           current = current;
@@ -34,12 +34,12 @@
         };
 
         modules = [
-          ./hosts/default/configuration.nix
+          ./hosts/headless/configuration.nix
           inputs.home-manager.nixosModules.default
         ];
       };
 
-      basic = nixpkgs.lib.nixosSystem {
+      headed = nixpkgs.lib.nixosSystem {
         specialArgs = {
           inherit inputs;
           current = current;
@@ -47,7 +47,7 @@
         };
 
         modules = [
-          ./hosts/basic/configuration.nix
+          ./hosts/headed/configuration.nix
           inputs.home-manager.nixosModules.default
         ];
       };

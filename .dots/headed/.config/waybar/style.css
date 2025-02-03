@@ -1,0 +1,141 @@
+* {
+  font-family: FontAwesome, Lato, Roboto, sans-serif;
+  font-size: 10px;
+  font-weight: 400;
+  border: none;
+  border-radius: 0;
+}
+
+window#waybar {
+  background: rgba(0, 0, 0, 0);
+  color: #cccccc;
+}
+
+tooltip {
+  background: #ffffff;
+  border-radius: 7px;
+  font-size: 10px;
+  color: #333333;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 5);
+  text-shadow: none;
+}
+
+tooltip * {
+  color: #333333;
+}
+
+#workspaces {
+  background: rgba(0, 0, 0, 0);
+  margin-left: 5px;
+  margin-top: 5px;
+}
+
+#workspaces button {
+  margin-right: 5px;
+  background: #ffffff;
+  padding: 0 5px;
+  border-radius: 500px;
+  opacity: 0.2;
+  font-size: 1px;
+  color: #999999;
+}
+
+#workspaces button.active, #workspaces button.focused, #workspaces button.urgent, #workspaces button:hover {
+  opacity: 1;
+}
+
+#workspaces button.urgent {
+  background: #ff7777;
+}
+
+#workspaces button:hover {
+  box-shadow: none;
+  text-shadow: none;
+}
+
+#temperature {
+  background: #ffffff;
+  padding: 0 10px;
+  border-right: 1px solid #ececec;
+  border-radius: 500px 0 0 500px;
+  color: #333333;
+  margin-top: 5px;
+}
+
+#temperature.critical {
+  background: #ffaaaa;
+  font-weight: bold;
+  color: #ff3333;
+}
+
+#memory {
+  background: #ffffff;
+  padding: 0 10px;
+  border-right: 1px solid #ececec;
+  border-radius: 0 0 0 0;
+  color: #333333;
+  margin-top: 5px;
+}
+
+#cpu {
+  background: #ffffff;
+  padding: 0 10px;
+  border-radius: 0 500px 500px 0;
+  color: #333333;
+  margin-right: 5px;
+  margin-top: 5px;
+}
+
+#network {
+  background: #ffffff;
+  padding: 0 10px;
+  border-radius: 500px;
+  color: #333333;
+  margin-right: 5px;
+  margin-top: 5px;
+}
+
+#pulseaudio {
+  background: #ffffff;
+  padding: 0 10px;
+  border-right: 1px solid #ececec;
+  border-radius: 500px 0 0 500px;
+  color: #333333;
+  margin-top: 5px;
+}
+
+#pulseaudio.microphone {
+  background: #ffffff;
+  padding: 0 10px;
+  color: #333333;
+  border-radius: 0 500px 500px 0;
+  margin-right: 5px;
+  margin-top: 5px;
+}
+
+#battery {
+  background: #ffffff;
+  padding: 0 10px;
+  border-radius: 500px;
+  color: #333333;
+  margin-right: 5px;
+  margin-top: 5px;
+}
+
+#clock {
+  background: #ffffff;
+  padding: 0 10px;
+  color: #333333;
+  border-radius: 500px;
+  margin-right: 5px;
+  margin-top: 5px;
+}
+
+#tray {
+  background: #ffffff;
+  padding: 0 10px;
+  color: #333333;
+  border-radius: 500px;
+  margin-right: 5px;
+  margin-top: 5px;
+}

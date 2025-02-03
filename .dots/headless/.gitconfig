@@ -1,0 +1,9 @@
+[credential]
+	helper = store --file $HOME/.git-credentials
+	helper = cache
+
+[user]
+	email = inq2111@gmail.com
+	name = zinzan
+[init]
+	defaultBranch = main

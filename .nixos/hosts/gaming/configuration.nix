@@ -2,7 +2,7 @@
 
 {
   imports = [
-    ../basic/configuration.nix # gaming builds on basic
+    ../headed/configuration.nix # builds on headed
   ];
 
   nixpkgs.config.allowUnfree = true;

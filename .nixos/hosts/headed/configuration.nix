@@ -2,7 +2,7 @@
 
 {
   imports = [
-    ../default/configuration.nix # basic builds on default
+    ../headless/configuration.nix # builds on headless
   ];
 
   environment.systemPackages = [
