@@ -30,6 +30,7 @@
 	unstable.atuin
 	unstable.tmux
 	unstable.neovim
+	unstable.posting
 	current.git
 	current.zip
 	current.unzip
@@ -48,7 +49,8 @@
 	current.nebula
 	current.linuxPackages.usbip
 	# virt
-	current.docker-compose
+	current.podman-tui
+	current.podman-compose
 	# hosting
 	unstable.flyctl
 	# perf
@@ -68,12 +70,14 @@
 
   services.openssh.enable = true;
 
-  virtualisation.docker = {
-    enable = true;
-    enableOnBoot = true;
-    daemon.settings = {
-      insecure-registries = ["docker.docpay.cluster"];
+  virtualisation = {
+    podman = {
+      enable = true;
+      dockerCompat = true;
+      defaultNetwork.settings.dns_enabled = true;
     };
+
+    oci-containers.backend = "podman";
   };
 
   fonts.packages = [
@@ -92,13 +96,12 @@
     firewall = {
       enable = true;
       allowedTCPPorts = [
-	5200
-	3000
-	3500
 	8080
 	8081
-	7703
-	60006
+	8082
+	8083
+	8084
+	8085
       ];
       allowedTCPPortRanges = [];
       allowedUDPPorts = [];
