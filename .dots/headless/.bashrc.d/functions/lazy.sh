@@ -10,3 +10,6 @@ alias nixos='config nixos'
 
 alias aa='aichat'
 alias ai='aichat'
+
+alias http='http'
+alias httpp='http-prompt'
