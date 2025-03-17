@@ -63,6 +63,17 @@ vim.keymap.set('n', '<down>', '<cmd>echo "Arrow keys are unbound. Use hjkl to mo
 vim.keymap.set('n', '<leader>yfp', '<cmd>let @+ = expand("%")<CR><cmd>echo "Relative path to current buffer yanked."<CR>', { desc = '[ ] [y]ank [f]ile [p]ath' })
 vim.keymap.set('n', '<leader>yffp', '<cmd>let @+ = expand("%:p")<CR><cmd>echo "Relative full path to current buffer yanked."<CR>', { desc = '[ ] [y]ank [f]ull [f]ile [p]ath' })
 
+function setFolds()
+	local lvl = vim.fn.input("Fold Level: ")
+
+	if lvl ~= "" then
+		vim.cmd("set foldlevel=" .. lvl)
+		vim.cmd("set foldnestmax=" .. (lvl + 1))
+	end
+end
+
+vim.keymap.set('n', '<leader>z', '<cmd>lua setFolds()<CR>', { desc = '[ ] [z] set fold level', silent = true })
+
 -- highlight on yank; see `:h vim.highlight.on_yank()`
 local hlygroup = vim.api.nvim_create_augroup('-hl-yank', { clear = true })
 vim.api.nvim_create_autocmd('TextYankPost', {
