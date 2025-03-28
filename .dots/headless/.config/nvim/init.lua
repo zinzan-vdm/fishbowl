@@ -46,6 +46,7 @@ vim.opt.scrolloff = 15
 vim.opt.termguicolors = true -- worth making sure that your terminal supports this
 
 vim.opt.foldmethod = 'indent'
+vim.opt.foldnestmax = 20
 vim.opt.foldlevelstart = 99
 
 vim.opt.hlsearch = true
