@@ -2,7 +2,10 @@
 
 alias n='$EDITOR'
 alias lg='lazygit'
+
 alias fu='flake-use'
+alias fe='flake-edit'
+alias fi='flake-init'
 
 alias conf='config'
 alias dots='config dots'

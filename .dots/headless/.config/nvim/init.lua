@@ -52,7 +52,7 @@ vim.opt.foldlevelstart = 99
 vim.opt.hlsearch = true
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
-vim.keymap.set('n', '<leader>z', '<cmd>set wrap!<CR>', { desc = 'toggle line wrapping [ ][z]'})
+vim.keymap.set('n', '<leader>zz', '<cmd>set wrap!<CR>', { desc = 'toggle line wrapping [ ][z]'})
 
 vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode.' })
 
@@ -73,7 +73,7 @@ function setFolds()
 	end
 end
 
-vim.keymap.set('n', '<leader>z', '<cmd>lua setFolds()<CR>', { desc = '[ ] [z] set fold level', silent = true })
+vim.keymap.set('n', '<leader>za', '<cmd>lua setFolds()<CR>', { desc = '[ ] [z] set fold level', silent = true })
 
 -- highlight on yank; see `:h vim.highlight.on_yank()`
 local hlygroup = vim.api.nvim_create_augroup('-hl-yank', { clear = true })
@@ -412,28 +412,28 @@ require('lazy').setup({
 				end,
 			})
 
-			-- on detatch, remove lsp highlights [[legacy before lsp included in nvim .11]]
-			-- vim.api.nvim_create_autocmd('LspDetach', {
-			-- 	group = vim.api.nvim_create_augroup('-lsp-detach', { clear = true }),
-			-- 	callback = function(event)
-			-- 		vim.lsp.buf.clear_references()
-			-- 		vim.api.nvim_clear_autocmds({ group = '-lsp-highlight', buffer = event.buf })
-			-- 	end,
-			-- })
+			vim.diagnostic.config({ virtual_text = true })
 
 			-- by default neovim doesnt support all lsp functions, nvim-cmp and luasnip tries to add support for the neovim features
 			local capabilities = vim.lsp.protocol.make_client_capabilities()
 			capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
 
+			vim.lsp.config('*', {
+				capabilities = capabilities,
+			})
+
 			-- lets configure some language servers; see `:help lspconfig-all` for a list of preconfigured lsps
+
 			vim.lsp.config('gopls', {
-				hints = {
-					assignVariableTypes = true,
-					compositeLiteralFields = true,
-					constantValues = true,
-					functionTypeParameters = true,
-					parameterNames = true,
-					rangeVariableTypes = true,
+				settings = {
+					hints = {
+						assignVariableTypes = true,
+						compositeLiteralFields = true,
+						constantValues = true,
+						functionTypeParameters = true,
+						parameterNames = true,
+						rangeVariableTypes = true,
+					},
 				},
 			})
 
