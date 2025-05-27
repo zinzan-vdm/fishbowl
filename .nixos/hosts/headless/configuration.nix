@@ -5,6 +5,8 @@
     /etc/nixos/hardware-configuration.nix # use the platform generated hardware config instead of our own
   ];
 
+  nixpkgs.config.allowUnfree = true;
+
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   users.users.fish = {
