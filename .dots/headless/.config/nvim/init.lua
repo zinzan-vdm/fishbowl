@@ -412,77 +412,70 @@ require('lazy').setup({
 				end,
 			})
 
-			vim.api.nvim_create_autocmd('LspDetach', {
-				group = vim.api.nvim_create_augroup('-lsp-detach', { clear = true }),
-				callback = function(event)
-					vim.lsp.buf.clear_references()
-					vim.api.nvim_clear_autocmds({ group = '-lsp-highlight', buffer = event.buf })
-				end,
-			})
+			-- on detatch, remove lsp highlights [[legacy before lsp included in nvim .11]]
+			-- vim.api.nvim_create_autocmd('LspDetach', {
+			-- 	group = vim.api.nvim_create_augroup('-lsp-detach', { clear = true }),
+			-- 	callback = function(event)
+			-- 		vim.lsp.buf.clear_references()
+			-- 		vim.api.nvim_clear_autocmds({ group = '-lsp-highlight', buffer = event.buf })
+			-- 	end,
+			-- })
 
 			-- by default neovim doesnt support all lsp functions, nvim-cmp and luasnip tries to add support for the neovim features
 			local capabilities = vim.lsp.protocol.make_client_capabilities()
 			capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
 
-			-- lets pre-install some language servers; see `:help lspconfig-all` for a list of preconfigured lsps
-			local servers = {
-				ts_ls = {
-					settings = {
-						typescript = {
-							inlayHints = {
-								includeInlayParameterNameHints = 'all',
-								includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-								includeInlayFunctionParameterTypeHints = true,
-								includeInlayVariableTypeHints = true,
-								includeInlayVariableTypeHintsWhenTypeMatchesName = false,
-								includeInlayPropertyDeclarationTypeHints = true,
-								includeInlayFunctionLikeReturnTypeHints = true,
-								includeInlayEnumMemberValueHints = true,
-							}
-						},
-						javascript = {
-							inlayHints = {
-								includeInlayParameterNameHints = 'all',
-								includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-								includeInlayFunctionParameterTypeHints = true,
-								includeInlayVariableTypeHints = true,
-								includeInlayVariableTypeHintsWhenTypeMatchesName = false,
-								includeInlayPropertyDeclarationTypeHints = true,
-								includeInlayFunctionLikeReturnTypeHints = true,
-								includeInlayEnumMemberValueHints = true,
-							}
-						},
+			-- lets configure some language servers; see `:help lspconfig-all` for a list of preconfigured lsps
+			vim.lsp.config('gopls', {
+				hints = {
+					assignVariableTypes = true,
+					compositeLiteralFields = true,
+					constantValues = true,
+					functionTypeParameters = true,
+					parameterNames = true,
+					rangeVariableTypes = true,
+				},
+			})
+
+			vim.lsp.config('ts_ls', {
+				settings = {
+					typescript = {
+						inlayHints = {
+							includeInlayParameterNameHints = 'all',
+							includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+							includeInlayFunctionParameterTypeHints = true,
+							includeInlayVariableTypeHints = true,
+							includeInlayVariableTypeHintsWhenTypeMatchesName = false,
+							includeInlayPropertyDeclarationTypeHints = true,
+							includeInlayFunctionLikeReturnTypeHints = true,
+							includeInlayEnumMemberValueHints = true,
+						}
+					},
+					javascript = {
+						inlayHints = {
+							includeInlayParameterNameHints = 'all',
+							includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+							includeInlayFunctionParameterTypeHints = true,
+							includeInlayVariableTypeHints = true,
+							includeInlayVariableTypeHintsWhenTypeMatchesName = false,
+							includeInlayPropertyDeclarationTypeHints = true,
+							includeInlayFunctionLikeReturnTypeHints = true,
+							includeInlayEnumMemberValueHints = true,
+						}
 					},
 				},
-				gopls = {
-					hints = {
-						assignVariableTypes = true,
-						compositeLiteralFields = true,
-						constantValues = true,
-						functionTypeParameters = true,
-						parameterNames = true,
-						rangeVariableTypes = true,
-					},
-				},
-			}
+			})
 
 			-- ensure mason servers are installed, you can check with `:Mason` and use `g?` in its menu for help
 			require('mason').setup()
 
 			-- install language servers and anything else you might want to add
 			local ensure_installed = vim.tbl_keys(servers or {})
-			-- vim.list_extend(ensureInstalled, {})
+
 			require('mason-tool-installer').setup({ ensure_installed = ensure_installed })
 
 			require('mason-lspconfig').setup({
-				handlers = {
-					function(server_name)
-						local server = servers[server_name] or {}
-						-- override only values explicitly passed by above server config
-						server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
-						require('lspconfig')[server_name].setup(server)
-					end,
-				},
+				automatic_enable = true,
 			})
 		end,
 	},
