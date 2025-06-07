@@ -1,11 +1,12 @@
 #!/usr/bin/env bash
 
+alias mkdir='mkdir -p'
+alias rmr='rm -fR'
+
 alias n='$EDITOR'
 alias lg='lazygit'
 
 alias fu='flake-use'
-alias fe='flake-edit'
-alias fi='flake-init'
 
 alias conf='config'
 alias dots='config dots'

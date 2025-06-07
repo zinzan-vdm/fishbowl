@@ -3,3 +3,5 @@
 
 [[ -f ~/.bashrc ]] && source ~/.bashrc
 
+[[ -f ~/.bashrc.unmanaged ]] && source ~/.bashrc.unmanaged
+

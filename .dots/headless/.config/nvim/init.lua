@@ -234,11 +234,35 @@ require('lazy').setup({
 		},
 	},
 
+	{ 'folke/snacks.nvim',
+		priority = 1000,
+		lazy = false,
+		opts = {
+			bigfile = { enabled = true },
+			input = { enabled = true },
+			notifier = {
+				enabled = true,
+				timeout = 3000,
+			},
+			picker = { enabled = true },
+			quickfile = { enabled = true },
+			scope = { enabled = true },
+			statuscolumn = { enabled = true },
+			words = { enabled = true },
+			styles = {
+				notification = {
+					wo = { wrap = true }, -- Wrap notifications
+				},
+			},
+		},
+	},
+
 	-- telescope fuzzystuff
 	{ 'nvim-telescope/telescope.nvim',
 		event = 'VimEnter',
 		branch = '0.1.x',
 		dependencies = {
+			{ 'folke/snacks.nvim' },
 			{ 'nvim-lua/plenary.nvim' },
 			{ 'nvim-telescope/telescope-fzf-native.nvim',
 				build = 'make',
@@ -681,7 +705,7 @@ require('lazy').setup({
 		build = 'make',
 		dependencies = {
 			'nvim-treesitter/nvim-treesitter',
-			'stevearc/dressing.nvim',
+			'folke/snacks.nvim',
 			'nvim-lua/plenary.nvim',
 			'MunifTanjim/nui.nvim',
 			'echasnovski/mini.icons', -- icons are optional
@@ -714,18 +738,24 @@ require('lazy').setup({
 		opts = {
 			provider = 'claude',
 			auto_suggestions_provider = 'claude',
-			claude = {
-				endpoint = 'https://api.anthropic.com',
-				model = 'claude-3-5-sonnet-20241022',
-				temperature = 0,
-				max_tokens = 4096,
-			},
+			cursor_applying_provider = 'claude',
 			behaviour = {
 				auto_suggestions = false,
 				auto_set_highlight_group = true,
 				auto_set_keymaps = true,
 				auto_apply_diff_after_generation = false,
 				support_paste_from_clipboard = false,
+				enable_cursor_planning_mode = true,
+			},
+			providers = {
+				claude = {
+					endpoint = 'https://api.anthropic.com',
+					model = 'claude-3-7-sonnet-latest',
+					extra_request_body = {
+						temperature = 0,
+						max_tokens = 4096,
+					},
+				},
 			},
 			mappings = {
 				ask = '<leader>aa',
