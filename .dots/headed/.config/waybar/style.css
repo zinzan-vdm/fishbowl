@@ -98,6 +98,15 @@ tooltip * {
   margin-top: 5px;
 }
 
+#bluetooth {
+  background: #ffffff;
+  padding: 0 10px;
+  border-radius: 500px;
+  color: #333333;
+  margin-right: 5px;
+  margin-top: 5px;
+}
+
 #pulseaudio {
   background: #ffffff;
   padding: 0 10px;
