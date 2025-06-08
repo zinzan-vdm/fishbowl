@@ -71,6 +71,8 @@
     jack.enable = true;
   };
 
+  services.blueman.enable = true;
+
   powerManagement.enable = true;
   systemd.sleep.extraConfig = ''
     AllowSuspend=yes
