@@ -12,7 +12,7 @@ woof() {
 
     echo "Serving $file at $link"
     echo ""
-    echo "$url" | qrencode -t UTF8
+    echo "$link" | qrencode -t UTF8
     echo ""
     echo "Press Ctrl+C to stop"
     echo ""
@@ -51,7 +51,7 @@ woofs() {
 
     echo "Serving $file at $link"
     echo ""
-    echo "$url" | qrencode -t UTF8
+    echo "$link" | qrencode -t UTF8
     echo ""
     echo "Press Ctrl+C to stop"
     echo ""
