@@ -32,6 +32,8 @@
 	unstable.atuin
 	unstable.tmux
 	unstable.neovim
+	unstable.httpie
+	unstable.http-prompt
 	current.git
 	current.zip
 	current.unzip
@@ -45,8 +47,8 @@
 	current.parallel
 	current.stow
 	current.sshfs
-	current.httpie
-	current.http-prompt
+	current.woof
+	current.qrencode
 	# net
 	current.wireguard-tools
 	current.nebula
