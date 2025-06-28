@@ -577,7 +577,8 @@ require('lazy').setup({
 			formatters_by_ft = {
 				go = { 'goimports', 'gofmt' },
 				typescript = { 'eslint', 'prettierd', 'prettier', stop_after_first = true },
-				javascript = { 'eslint', 'prettierd', 'prettier', stop_after_first = true },
+				typescriptreact = { 'eslint', 'prettierd', 'prettier', stop_after_first = true },
+				javascriptreact = { 'eslint', 'prettierd', 'prettier', stop_after_first = true },
 				['*'] = { 'trim_whitespace' },
 			},
 		},
