@@ -49,6 +49,7 @@
 	current.sshfs
 	current.woof
 	current.qrencode
+	current.speechd
 	# net
 	current.wireguard-tools
 	current.nebula
