@@ -2,7 +2,6 @@
 
 cd ~
 
-# Recommended variables - see https://wiki.hyprland.org/Getting-Started/Quick-start/#wrapping-the-launcher-recommended
 export _JAVA_AWT_WM_NONREPARENTING=1
 export XCURSOR_SIZE=24
 
