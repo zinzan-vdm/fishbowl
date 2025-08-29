@@ -8,7 +8,6 @@
   environment.systemPackages = [
     current.libjack2
     current.jack2
-    current.jack2Full
     current.jack_capture
     current.qjackctl
     current.pavucontrol
@@ -26,21 +25,25 @@
       packages = [
         current.home-manager
         # wayland tooling
-        current.xdg-desktop-portal-hyprland
         current.xdg-utils
         current.wf-recorder
-        # ux
+        # desktop
+        current.hyprpolkitagent
+        current.foot
         current.waybar
+        current.hyprutils
         current.hyprpaper
-        current.swaylock-effects
-        current.swayidle
+        current.hypridle
+        current.hyprlock
+        current.hyprsunset
+        current.hyprcursor
         current.shared-mime-info
         current.wl-clipboard
-        current.wlsunset
-        current.foot
+        current.clipse
         # device
         current.networkmanagerapplet
         current.brightnessctl
+        current.udiskie
         # tools
         current.dunst
         current.grim
@@ -58,11 +61,12 @@
     xwayland.enable = true;
   };
 
-  security.pam.services.swaylock = {
-    name = "swaylock";
+  security.pam.services.hyprlock = {
+    name = "hyprlock";
     text = "auth include login";
   };
 
+  security.rtkit.enable = true; # recommended for pipewire to use realtime scheduler
   services.pipewire = {
     enable = true;
     alsa.enable = true;
@@ -70,8 +74,6 @@
     pulse.enable = true;
     jack.enable = true;
   };
-
-  services.blueman.enable = true;
 
   powerManagement.enable = true;
   systemd.sleep.extraConfig = ''

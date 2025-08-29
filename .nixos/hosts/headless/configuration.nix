@@ -5,6 +5,8 @@
     /etc/nixos/hardware-configuration.nix # use the platform generated hardware config instead of our own
   ];
 
+  hardware.enableAllFirmware = true;
+
   nixpkgs.config.allowUnfree = true;
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -90,7 +92,7 @@
     current.lato
     current.dejavu_fonts
     current.noto-fonts
-    current.noto-fonts-cjk
+    current.noto-fonts-cjk-sans
     current.noto-fonts-emoji
     current.font-awesome
     current.liberation_ttf
@@ -118,6 +120,7 @@
     wireguard.enable = true;
   };
 
+  services.blueman.enable = true;
   hardware.bluetooth = {
     enable = true;
     powerOnBoot = true;
@@ -140,6 +143,33 @@
 
     # only required if mounting ntfs storage
     supportedFilesystems = [ "ntfs" ];
+
+    # See below section on power management (tlp)
+    extraModulePackages = [ config.boot.kernelPackages.acpi_call ];
+    kernelModules = [ "acpi_call" ];
+  };
+
+  # power management for battery longevity
+  # heat kills bats, <20% kills bats, prolonged 100% kills bats, heat decimates bats
+  # tips? never <20%, avoid 100% unless needed, defnitely dont roast at 100%, maybe cooling packs for high load (ie gaming)
+  # simple solution, start charge at 40%, stop at 80%
+  # maybe cycle 20% -> 100% -> 20% once a month to recalibrate battery meters (mostly for software to accurately read)
+  # we can use tlp for controls
+  # lenovo uses acpi_call to mod bat controls, it also has BIOS settings to cap for you somewhere if you want hardware caps
+  # Enable TLP for power management
+  services.tlp = {
+    enable = true;
+    settings = {
+      # my laptop uses 1/0 for conservation mode instead of percentages.
+      # START_CHARGE_THRESH_BAT0 = "40";
+      # STOP_CHARGE_THRESH_BAT0  = "80";
+      STOP_CHARGE_THRESH_BAT0 = "1";
+
+      # tlp disables masks systemd-rfkill to avoid conflicting power saving policies.
+      # we can use tlp to set devices and bypass rfkill
+      DEVICES_TO_DISABLE_ON_STARTUP = "";
+      DEVICES_TO_ENABLE_ON_STARTUP = "bluetooth wifi wwan";
+    };
   };
 
   time.timeZone = "Europe/Vienna";
