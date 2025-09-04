@@ -56,6 +56,9 @@
     };
   };
 
+  # for mounting devices
+  services.udisks2.enable = true;
+
   programs.hyprland = {
     enable = true;
     xwayland.enable = true;
