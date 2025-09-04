@@ -1,10 +1,8 @@
 #!/bin/bash
 # ~/.bashrc.profile defines a dots-profile specific rc to be executed before any other rcs.
 
-# If not running interactively, don't apply any configuration.
-[[ $- != *i* ]] && return
-
-export BASHRCD=$HOME/.bashrc.d
-
-source $BASHRCD/main.sh
+# run hyprland only on first TTY & if no display manager already running
+if [[ -z $DISPLAY ]] && [[ $(tty) == /dev/tty1 ]]; then
+	exec ~/.local/bin/wrapped-hyprland.sh
+fi
 
