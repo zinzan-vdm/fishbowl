@@ -79,13 +79,17 @@
   };
 
   powerManagement.enable = true;
-  systemd.sleep.extraConfig = ''
-    AllowSuspend=yes
-    AllowHibernation=no
-    AllowHybridSleep=no
-    AllowSuspendThenHibernate=no
-    SuspendState=freeze mem disk
-  '';
+  hardware.nvidia.powerManagement.enable = true; # if you have a nvidia gpu
+
+  # sleeping is weird on macbooks, this is the best i could get it to behave but its still not perfect...nixos
+  # im using a real laptop now though so we're good
+  # systemd.sleep.extraConfig = ''
+  #   AllowSuspend=yes
+  #   AllowHibernation=no
+  #   AllowHybridSleep=no
+  #   AllowSuspendThenHibernate=no
+  #   SuspendState=freeze mem disk
+  # '';
 
   boot.kernelParams = [ "consoleblank=0" ];
 
