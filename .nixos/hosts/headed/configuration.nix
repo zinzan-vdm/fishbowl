@@ -52,6 +52,8 @@
         # apps
         unstable.google-chrome
         unstable.obs-studio
+        # lenovo
+        unstable.lenovo-legion
       ];
     };
   };
@@ -78,20 +80,34 @@
     jack.enable = true;
   };
 
-  powerManagement.enable = true;
-  hardware.nvidia.powerManagement.enable = true; # if you have a nvidia gpu
+  hardware.nvidia.powerManagement.enable = true;
+  powerManagement = {
+    enable = true;
+    powertop.enable = true;
+    powerDownCommands = ''
+      echo deep > /sys/power/mem_sleep
+    '';
+  };
 
-  # sleeping is weird on macbooks, this is the best i could get it to behave but its still not perfect...nixos
-  # im using a real laptop now though so we're good
-  # systemd.sleep.extraConfig = ''
-  #   AllowSuspend=yes
-  #   AllowHibernation=no
-  #   AllowHybridSleep=no
-  #   AllowSuspendThenHibernate=no
-  #   SuspendState=freeze mem disk
-  # '';
+  services.logind = {
+    lidSwitch = "suspend-then-hibernate";
+    extraConfig = ''
+      HandlePowerKey=suspend-then-hibernate
+      IdleAction=suspend-then-hibernate
+      IdleActionSec=30min
+      HibernateDelaySec=2h # Time before going from suspend to hibernate
+    '';
+  };
 
-  boot.kernelParams = [ "consoleblank=0" ];
+  boot.resumeDevice = "/dev/disk/by-label/SWAP"; # ensure this is your swap device, otherwise use resume & resume_offset below
+  boot.kernelParams = [
+    "consoleblank=0"
+    "mem_sleep_default=deep"
+
+    # only use if using swapfile
+    # "resume="
+    # "resume_offset=0" # get your offset using `sudo filefrag -v /swapfile`
+  ];
 
   system.stateVersion = "24.05";
 }

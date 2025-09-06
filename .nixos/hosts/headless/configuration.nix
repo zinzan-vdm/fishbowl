@@ -94,8 +94,9 @@
     current.noto-fonts
     current.noto-fonts-cjk-sans
     current.noto-fonts-emoji
-    current.font-awesome
     current.liberation_ttf
+    unstable.nerd-fonts.jetbrains-mono
+    unstable.nerd-fonts.fira-code
   ];
 
   networking = {
@@ -158,10 +159,15 @@
   # maybe cycle 20% -> 100% -> 20% once a month to recalibrate battery meters (mostly for software to accurately read)
   # we can use tlp for controls
   # lenovo uses acpi_call to mod bat controls, it also has BIOS settings to cap for you somewhere if you want hardware caps
-  # Enable TLP for power management
   services.tlp = {
     enable = true;
     settings = {
+      # generally decent for most laptops
+      CPU_SCALING_GOVERNOR_ON_AC = "performance";
+      CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
+      CPU_ENERGY_PERF_POLICY_ON_BAT = "power";
+      CPU_ENERGY_PERF_POLICY_ON_AC = "performance";
+
       # my laptop uses 1/0 for conservation mode instead of percentages.
       # START_CHARGE_THRESH_BAT0 = "40";
       # STOP_CHARGE_THRESH_BAT0  = "80";
