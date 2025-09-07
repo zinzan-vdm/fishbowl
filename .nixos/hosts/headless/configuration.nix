@@ -95,6 +95,7 @@
     current.noto-fonts-cjk-sans
     current.noto-fonts-emoji
     current.liberation_ttf
+    unstable.font-awesome
     unstable.nerd-fonts.jetbrains-mono
     unstable.nerd-fonts.fira-code
   ];
