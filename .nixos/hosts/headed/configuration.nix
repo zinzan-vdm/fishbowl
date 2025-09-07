@@ -51,6 +51,7 @@
         current.slurp
         # apps
         unstable.google-chrome
+        unstable.discord-canary # discord-ptb if you dont want bleeding edge
         unstable.obs-studio
         # lenovo
         unstable.lenovo-legion
