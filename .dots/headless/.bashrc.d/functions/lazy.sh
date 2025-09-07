@@ -17,3 +17,5 @@ alias ai='aichat'
 
 alias http='http'
 alias httpp='http-prompt'
+
+alias host-dir='host-dir.sh'
