@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+alias l='ls -valh'
 alias mkdir='mkdir -p'
 alias rmr='rm -fR'
 
