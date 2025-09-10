@@ -52,6 +52,13 @@ vim.opt.foldlevelstart = 99
 vim.opt.hlsearch = true
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
+vim.keymap.set('n', '<leader>rt', function()
+	vim.opt.expandtab = false
+	vim.opt.tabstop = 3
+	vim.opt.shiftwidth = 3
+	vim.cmd('retab!')
+end, { desc = '[r]e[t]ab with my preferred settings - 3space tabs.' })
+
 vim.keymap.set('n', '<leader>zz', '<cmd>set wrap!<CR>', { desc = 'toggle line wrapping [ ][z]'})
 
 vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode.' })
@@ -504,6 +511,13 @@ require('lazy').setup({
 		end,
 	},
 
+	-- flutter tools to add dart lsp and flutter basics
+	{ 'nvim-flutter/flutter-tools.nvim',
+		lazy = false,
+		dependencies = { 'nvim-lua/plenary.nvim', },
+		config = true,
+	},
+
 	-- treesitter completion, highlighting, and navigating goodness
 	{ 'nvim-treesitter/nvim-treesitter',
 		dependencies = { 'nvim-treesitter/nvim-treesitter-textobjects' },
@@ -519,6 +533,7 @@ require('lazy').setup({
 				'go',
 				'html',
 				'css',
+				'dart',
 				'yaml',
 				'json',
 				'lua',
@@ -574,6 +589,9 @@ require('lazy').setup({
 		opts = {
 			notify_on_error = false,
 			format_on_save = true,
+			default_format_opts = {
+				lsp_format = 'first',
+			},
 			formatters_by_ft = {
 				go = { 'goimports', 'gofmt' },
 				typescript = { 'eslint', 'prettierd', 'prettier', stop_after_first = true },

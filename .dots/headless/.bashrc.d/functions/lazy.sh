@@ -3,6 +3,7 @@
 alias l='ls -valh'
 alias mkdir='mkdir -p'
 alias rmr='rm -fR'
+alias datetime='date --rfc-3339=ns'
 
 alias n='$EDITOR'
 alias lg='lazygit'
