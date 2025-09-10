@@ -15,6 +15,7 @@
     isNormalUser = true;
     home = "/home/fish";
     extraGroups = [ "wheel" "disk" "networkmanager" "docker" ];
+    linger = true;
   };
 
   environment.systemPackages = [
@@ -24,6 +25,7 @@
 
   home-manager.users.fish = {
     programs.home-manager.enable = true;
+    systemd.user.startServices = "sd-switch";
     home = {
       stateVersion = "24.05";
       username = "fish";
@@ -178,6 +180,8 @@
       # we can use tlp to set devices and bypass rfkill
       DEVICES_TO_DISABLE_ON_STARTUP = "";
       DEVICES_TO_ENABLE_ON_STARTUP = "bluetooth wifi wwan";
+
+      USB_AUTOSUSPEND = 1;
     };
   };
 

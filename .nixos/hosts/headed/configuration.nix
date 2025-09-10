@@ -46,6 +46,7 @@
         current.udiskie
         # tools
         current.dunst
+        current.libnotify
         current.grim
         current.swappy
         current.slurp
@@ -67,6 +68,7 @@
     xwayland.enable = true;
   };
 
+  security.polkit.enable = true;
   security.pam.services.hyprlock = {
     name = "hyprlock";
     text = "auth include login";
@@ -81,34 +83,70 @@
     jack.enable = true;
   };
 
+  # hibernation see https://nixos.wiki/wiki/Hibernation
+  powerManagement.enable = true;
+  powerManagement.powertop.enable = true;
   hardware.nvidia.powerManagement.enable = true;
-  powerManagement = {
-    enable = true;
-    powertop.enable = true;
-    powerDownCommands = ''
-      echo deep > /sys/power/mem_sleep
-    '';
-  };
-
   services.logind = {
     lidSwitch = "suspend-then-hibernate";
+    powerKey = "hibernate";
+    powerKeyLongPress = "poweroff";
     extraConfig = ''
-      HandlePowerKey=suspend-then-hibernate
-      IdleAction=suspend-then-hibernate
-      IdleActionSec=30min
-      HibernateDelaySec=2h # Time before going from suspend to hibernate
+      SuspendState=mem
+      HibernateDelaySec=30m
     '';
   };
-
-  boot.resumeDevice = "/dev/disk/by-label/SWAP"; # ensure this is your swap device, otherwise use resume & resume_offset below
   boot.kernelParams = [
     "consoleblank=0"
     "mem_sleep_default=deep"
-
-    # only use if using swapfile
-    # "resume="
-    # "resume_offset=0" # get your offset using `sudo filefrag -v /swapfile`
+    "resume=/dev/disk/by-label/SWAP"
   ];
+  security.protectKernelImage = false;
+
+  systemd.services.sleep-log-on-suspend = {
+    description = "Sleep Log - on suspend (/tmp/sleep-log).";
+    wantedBy = [ "sleep.target" "hibernate.target" "hybrid-sleep.target" ];
+    before = [ "systemd-suspend.service" ];
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "${current.writeShellScript "sleep-log-on-suspend" ''
+        echo "$(date --rfc-3339=ns) :: on suspend" >> /tmp/sleep-log
+      ''}";
+    };
+  };
+  systemd.services.sleep-log-off-suspend = {
+    description = "Sleep Log - off suspend (/tmp/sleep-log).";
+    wantedBy = [ "sleep.target" "hibernate.target" "hybrid-sleep.target" ];
+    after = [ "systemd-suspend.service" ];
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "${current.writeShellScript "sleep-log-off-suspend" ''
+        echo "$(date --rfc-3339=ns) :: off suspend" >> /tmp/sleep-log
+      ''}";
+    };
+  };
+  systemd.services.sleep-log-on-hibernate = {
+    description = "Sleep Log - on hibernate (/tmp/sleep-log).";
+    wantedBy = [ "sleep.target" "hibernate.target" "hybrid-sleep.target" ];
+    before = [ "systemd-hibernate.service" ];
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "${current.writeShellScript "sleep-log-on-hibernate" ''
+        echo "$(date --rfc-3339=ns) :: on hibernate" >> /tmp/sleep-log
+      ''}";
+    };
+  };
+  systemd.services.sleep-log-off-hibernate = {
+    description = "Sleep Log - off hibernate (/tmp/sleep-log).";
+    wantedBy = [ "sleep.target" "hibernate.target" "hybrid-sleep.target" ];
+    after = [ "systemd-hibernate.service" ];
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "${current.writeShellScript "sleep-log-off-hibernate" ''
+        echo "$(date --rfc-3339=ns) :: off hibernate" >> /tmp/sleep-log
+      ''}";
+    };
+  };
 
   system.stateVersion = "24.05";
 }
