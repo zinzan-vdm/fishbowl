@@ -36,7 +36,7 @@ function nixme() {
     return 1
   fi
 
-  echo "Starting temporary nix-shell ($tmp_shell) with: ${packages[*]}"
+  echo "Starting temporary nix-shell with: ${packages[*]}"
   if [[ -n "$channel" ]]; then
     echo "Using channel: $channel"
   fi
