@@ -63,6 +63,7 @@
 	current.podman-compose
 	# hosting
 	unstable.flyctl
+	unstable.miniserve
 	# perf
 	current.btop
 	current.iftop
