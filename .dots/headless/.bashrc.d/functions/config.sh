@@ -94,7 +94,12 @@ function config-dots-edit() {
   local current=$(cat $profile_dots || echo $default_profile)
   local profile=${1-$current}
 
-  cd "$HOME/.fishbowl/.dots/$profile"
+  if [[ "$1" == "" ]]; then
+    cd "$HOME/.fishbowl/.dots"
+  else
+    cd "$HOME/.fishbowl/.dots/$profile"
+  fi
+
   $EDITOR .
   cd -
 }
@@ -123,7 +128,7 @@ function config-nixos-upgrade() {
   git -C $HOME/.fishbowl add .nixos/.
 
   echo "nix flake update \$HOME/.fishbowl/.nixos"
-  nix flake update "$HOME/.fishbowl/.nixos"
+  nix flake update --flake "$HOME/.fishbowl/.nixos"
 
   echo "nixos-rebuild switch --flake \$HOME/.fishbowl/.nixos#$profile --impure --upgrade"
   sudo nixos-rebuild switch --flake "$HOME/.fishbowl/.nixos#$profile" --impure --upgrade
