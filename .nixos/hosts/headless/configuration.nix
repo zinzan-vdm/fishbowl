@@ -37,7 +37,7 @@
 	unstable.tmux
 	unstable.neovim
 	unstable.httpie
-	unstable.http-prompt
+	unstable.hurl
 	current.git
 	current.zip
 	current.unzip

@@ -35,7 +35,7 @@
         current.hyprpaper
         current.hypridle
         current.hyprlock
-        current.hyprsunset
+        unstable.sunsetr
         current.hyprcursor
         current.shared-mime-info
         current.wl-clipboard
