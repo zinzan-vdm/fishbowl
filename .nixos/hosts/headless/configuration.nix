@@ -44,6 +44,7 @@
 	current.lazygit
 	current.zoxide
 	current.tree
+	unstable.yazi
 	current.fd
 	current.ripgrep
 	current.fzf
@@ -75,6 +76,7 @@
 	current.cmake
 	current.gcc
 	current.gnupg
+	current.trash-cli
       ];
     };
   };
