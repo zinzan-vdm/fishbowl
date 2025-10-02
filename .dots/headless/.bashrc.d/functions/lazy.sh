@@ -5,10 +5,12 @@ alias mkdir='mkdir -p'
 alias rmr='rm -fR'
 alias datetime='date --rfc-3339=ns'
 
+alias fb="yazi"
+
 alias n='$EDITOR'
 alias lg='lazygit'
 
-alias fu='flake-use'
+alias fu='nixf use'
 
 alias conf='config'
 alias dots='config dots'
