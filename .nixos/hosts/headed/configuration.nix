@@ -51,6 +51,7 @@
         current.grim
         current.swappy
         current.slurp
+        current.wayvnc
         # apps
         unstable.google-chrome
         unstable.discord-canary # discord-ptb if you dont want bleeding edge
@@ -58,6 +59,20 @@
         # lenovo
         unstable.lenovo-legion
       ];
+    };
+  };
+
+  programs.virt-manager.enable = true;
+
+  # install the wayvnc service
+  systemd.user.services.wayvnc = {
+    description = "WayVNC VNC server";
+    after = [ "graphical-session.target" ];
+    wants = [ "graphical-session.target" ];
+    serviceConfig = {
+      ExecStart = "${current.wayvnc}/bin/wayvnc --render-cursor --seat=seat0 --output=HDMI-A-1 0.0.0.0";
+      Restart = "on-failure";
+      RestartSec = 5;
     };
   };
 
@@ -69,7 +84,6 @@
     xwayland.enable = true;
   };
 
-  security.polkit.enable = true;
   security.pam.services.hyprlock = {
     name = "hyprlock";
     text = "auth include login";
@@ -103,51 +117,6 @@
     "resume=/dev/disk/by-label/SWAP"
   ];
   security.protectKernelImage = false;
-
-  systemd.services.sleep-log-on-suspend = {
-    description = "Sleep Log - on suspend (/tmp/sleep-log).";
-    wantedBy = [ "sleep.target" "hibernate.target" "hybrid-sleep.target" ];
-    before = [ "systemd-suspend.service" ];
-    serviceConfig = {
-      Type = "oneshot";
-      ExecStart = "${current.writeShellScript "sleep-log-on-suspend" ''
-        echo "$(date --rfc-3339=ns) :: on suspend" >> /tmp/sleep-log
-      ''}";
-    };
-  };
-  systemd.services.sleep-log-off-suspend = {
-    description = "Sleep Log - off suspend (/tmp/sleep-log).";
-    wantedBy = [ "sleep.target" "hibernate.target" "hybrid-sleep.target" ];
-    after = [ "systemd-suspend.service" ];
-    serviceConfig = {
-      Type = "oneshot";
-      ExecStart = "${current.writeShellScript "sleep-log-off-suspend" ''
-        echo "$(date --rfc-3339=ns) :: off suspend" >> /tmp/sleep-log
-      ''}";
-    };
-  };
-  systemd.services.sleep-log-on-hibernate = {
-    description = "Sleep Log - on hibernate (/tmp/sleep-log).";
-    wantedBy = [ "sleep.target" "hibernate.target" "hybrid-sleep.target" ];
-    before = [ "systemd-hibernate.service" ];
-    serviceConfig = {
-      Type = "oneshot";
-      ExecStart = "${current.writeShellScript "sleep-log-on-hibernate" ''
-        echo "$(date --rfc-3339=ns) :: on hibernate" >> /tmp/sleep-log
-      ''}";
-    };
-  };
-  systemd.services.sleep-log-off-hibernate = {
-    description = "Sleep Log - off hibernate (/tmp/sleep-log).";
-    wantedBy = [ "sleep.target" "hibernate.target" "hybrid-sleep.target" ];
-    after = [ "systemd-hibernate.service" ];
-    serviceConfig = {
-      Type = "oneshot";
-      ExecStart = "${current.writeShellScript "sleep-log-off-hibernate" ''
-        echo "$(date --rfc-3339=ns) :: off hibernate" >> /tmp/sleep-log
-      ''}";
-    };
-  };
 
   system.stateVersion = "24.05";
 }

@@ -14,7 +14,7 @@
   users.users.fish = {
     isNormalUser = true;
     home = "/home/fish";
-    extraGroups = [ "wheel" "disk" "networkmanager" "docker" ];
+    extraGroups = [ "wheel" "disk" "networkmanager" "docker" "podman" "libvirtd" "kvm" ];
     linger = true;
   };
 
@@ -59,6 +59,7 @@
 	current.wireguard-tools
 	current.nebula
 	current.linuxPackages.usbip
+	current.dnsutils
 	# virt
 	current.podman-tui
 	current.podman-compose
@@ -83,7 +84,27 @@
 
   services.openssh.enable = true;
 
+  # security.polkit = {
+  #   enable = true;
+  #
+  #   # allow podman to manage units in rootless.
+  #   extraConfig = ''
+  #     polkit.addRule(function(action, subject) {
+  #       if (action.id == "org.freedesktop.systemd1.manage-units" &&
+  #           action.lookup("unit").indexOf("libpod-") == 0 &&
+  #           subject.isInGroup("podman")) {
+  #         return polkit.Result.YES;
+  #       }
+  #     });
+  #   '';
+  # };
+
   virtualisation = {
+    libvirtd = {
+      enable = true;
+      qemu.runAsRoot = false;
+    };
+
     podman = {
       enable = true;
       dockerCompat = true;
@@ -125,6 +146,16 @@
 
     networkmanager.enable = true;
     wireguard.enable = true;
+  };
+
+  services.resolved = {
+    enable = true;
+    dnssec = "true";
+    domains = [ "~." ];
+    fallbackDns = [ "1.1.1.1" "1.0.0.1" ];
+    extraConfig = ''
+      DNSOverTLS=yes
+    '';
   };
 
   services.blueman.enable = true;
