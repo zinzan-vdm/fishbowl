@@ -84,21 +84,6 @@
 
   services.openssh.enable = true;
 
-  # security.polkit = {
-  #   enable = true;
-  #
-  #   # allow podman to manage units in rootless.
-  #   extraConfig = ''
-  #     polkit.addRule(function(action, subject) {
-  #       if (action.id == "org.freedesktop.systemd1.manage-units" &&
-  #           action.lookup("unit").indexOf("libpod-") == 0 &&
-  #           subject.isInGroup("podman")) {
-  #         return polkit.Result.YES;
-  #       }
-  #     });
-  #   '';
-  # };
-
   virtualisation = {
     libvirtd = {
       enable = true;
@@ -146,16 +131,6 @@
 
     networkmanager.enable = true;
     wireguard.enable = true;
-  };
-
-  services.resolved = {
-    enable = true;
-    dnssec = "true";
-    domains = [ "~." ];
-    fallbackDns = [ "1.1.1.1" "1.0.0.1" ];
-    extraConfig = ''
-      DNSOverTLS=yes
-    '';
   };
 
   services.blueman.enable = true;
