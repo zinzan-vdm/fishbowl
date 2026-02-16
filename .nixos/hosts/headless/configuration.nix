@@ -111,6 +111,13 @@
     unstable.nerd-fonts.fira-code
   ];
 
+  services.resolved = {
+    enable = true;
+    domains = [ "~." ];
+    fallbackDns = [ "1.1.1.1" "8.8.8.8" "9.9.9.9" "8.8.4.4" ];
+    dnssec = "allow-downgrade";
+  };
+
   networking = {
     hostName = "fishbowl";
 
@@ -129,7 +136,11 @@
       allowedUDPPortRanges = [];
     };
 
-    networkmanager.enable = true;
+    networkmanager = {
+      enable = true;
+      dns = "systemd-resolved";
+    };
+
     wireguard.enable = true;
   };
 
