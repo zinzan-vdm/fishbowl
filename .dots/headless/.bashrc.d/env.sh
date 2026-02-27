@@ -8,3 +8,5 @@ export GOPRIVATE="github.com/yumpsh"
 export PATH="$PATH:$HOME/.local/bin"
 export PATH="$PATH:$GOPATH/bin"
 
+eval "$(pay-respects bash --alias fuck)"
+
