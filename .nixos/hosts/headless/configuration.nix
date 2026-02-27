@@ -55,7 +55,6 @@
 	current.woof
 	current.qrencode
 	current.speechd
-	current.pay-respects
 	# net
 	current.wireguard-tools
 	current.nebula
