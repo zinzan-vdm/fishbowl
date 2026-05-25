@@ -130,6 +130,7 @@
 	8083
 	8084
 	8085
+	3000
       ];
       allowedTCPPortRanges = [];
       allowedUDPPorts = [];
