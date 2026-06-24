@@ -78,6 +78,8 @@
 	current.gcc
 	current.gnupg
 	current.trash-cli
+	# tetris
+	inputs.tetro-tui.packages.${unstable.system}.default
       ];
     };
   };
@@ -202,7 +204,7 @@
       DEVICES_TO_DISABLE_ON_STARTUP = "";
       DEVICES_TO_ENABLE_ON_STARTUP = "bluetooth wifi wwan";
 
-      USB_AUTOSUSPEND = 1;
+      USB_AUTOSUSPEND = 0;
     };
   };
 
