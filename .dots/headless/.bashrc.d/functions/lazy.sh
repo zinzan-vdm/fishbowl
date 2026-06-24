@@ -16,8 +16,9 @@ alias conf='config'
 alias dots='config dots'
 alias nixos='config nixos'
 
-alias aa='aichat'
-alias ai='aichat'
+alias aii='aichat'
+alias ai='aichat -s -r ai'
+alias yolo='aichat -e'
 
 alias http='http'
 alias httpf='hurl'
